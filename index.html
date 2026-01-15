@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Political Times</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      color: #333;
+      background: #fff;
+    }
+    header {
+      border-bottom: 3px solid #333;
+      padding: 20px 0;
+    }
+    .top-bar {
+      max-width: 1600px;
+      margin: 0 auto 5px auto;
+      padding: 0 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+    }
+    .site-logo {
+      width: 120px;
+      height: 60px;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #666;
+      border: 1px solid #ccc;
+    }
+    .date {
+      color: #666;
+      font-size: 14px;
+    }
+    .subscribe-btn {
+      background: #567b95;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+    .donate-btn {
+      background: #c0392b;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .logo-container {
+      text-align: center;
+      padding: 0;
+    }
+    .logo-image {
+      max-width: 400px;
+      max-height: 80px;
+      width: auto;
+      height: auto;
+    }
+    .logo {
+      font-family: 'Old English Text MT', 'Times New Roman', serif;
+      font-size: 60px;
+      font-weight: normal;
+      letter-spacing: 2px;
+    }
+    .tagline {
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      color: #666;
+      margin-top: 5px;
+    }
+    .container {
+      max-width: 1600px;
+      margin: 40px auto;
+      padding: 0 60px;
+    }
+    .main-story {
+      border-bottom: 2px solid #999;
+      padding-bottom: 30px;
+      margin-bottom: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    .main-story-content {
+      order: 1;
+    }
+    .main-story-image {
+      order: 2;
+      display: flex;
+      align-items: center;
+    }
+    .main-story img {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      object-fit: cover;
+    }
+    .main-story h1 {
+      font-size: 42px;
+      line-height: 1.2;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    .main-story .summary {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+    .byline {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .byline strong {
+      color: #333;
+    }
+    .grid-stories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    .story-card {
+      border-bottom: 1px solid #e2e2e2;
+      padding-bottom: 20px;
+    }
+    .story-card.layout-left,
+    .story-card.layout-right {
+      grid-column: span 2;
+    }
+    .story-card.layout-left {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .story-card.layout-left img {
+      grid-row: 1 / 3;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .story-card.layout-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .story-card.layout-right img {
+      grid-row: 1 / 3;
+      grid-column: 2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .story-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+    .story-card h2 {
+      font-size: 20px;
+      line-height: 1.3;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .story-card h2 a {
+      text-decoration: none;
+      color: #333;
+      transition: color 0.2s;
+    }
+    .story-card h2 a:hover {
+      color: #567b95;
+    }
+    .story-card p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+    }
+    .opinion-section {
+      border-top: 3px solid #333;
+      padding-top: 30px;
+      margin-top: 40px;
+    }
+    .section-title {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e2e2e2;
+      padding-bottom: 10px;
+    }
+    footer {
+      background: #f7f7f7;
+      border-top: 1px solid #e2e2e2;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+    .footer-content {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 60px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+      .top-bar {
+        padding: 0 20px;
+      }
+      .footer-content {
+        padding: 0 20px;
+      }
+      .grid-stories {
+        grid-template-columns: 1fr;
+      }
+      .logo {
+        font-size: 40px;
+      }
+      .main-story {
+        grid-template-columns: 1fr;
+      }
+      .main-story-image {
+        order: 1;
+      }
+      .main-story-content {
+        order: 2;
+      }
+      .main-story h1 {
+        font-size: 28px;
+      }
+      .main-story img {
+        height: 300px;
+        min-height: 300px;
+      }
+      .site-logo {
+        width: 80px;
+        height: 40px;
+        font-size: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div class="site-logo">
+        <img src="img/logo.png" alt="logo" class="logo-image"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      </div>
+      <div class="date" id="current-date"></div>
+      <div class="button-group">
+        <button class="subscribe-btn">SUBSCRIBE</button>
+        <button class="donate-btn">DONATE</button>
+      </div>
+    </div>
+    <div class="logo-container">
+      <img src="img/title.png" alt="The Donk" class="logo-image"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="logo" style="display: none;">The Donk</div>
+      <div class="tagline">Basically John Oliver if he was a group of college students.</div>
+    </div>
+  </header>
+  <main class="container">
+    <article class="main-story">
+      <div class="main-story-content">
+        <h1>From Jedi to King</h1>
+        <p class="summary">Trump and his AI-powered propaganda campaign</p>
+        <div class="byline"><strong>Anonymous</strong> • Dec. 5, 2025</div>
+        <p>None of us are strangers to Donald Trump's online presence. Before it was Truth Social it was Twitter (about
+          57,000 times), but now its AI generated images, ChatGPT, and pretty much all the generative content the
+          English department at UChicago has devoted themselves to destroying. And that feels normal to see on social
+          media right? I mean, we all see AI generated images on our for you pages, and at this point it might be hard
+          to define internet culture and trends without it...</p>
+      </div>
+      <div class="main-story-image">
+        <img src="img/from-jedi-to-king.webp" alt="From Jedi to King">
+      </div>
+    </article>
+    <div class="grid-stories">
+      <article class="story-card">
+        <img src="img/swinging-back-to-blue.webp" alt="Swinging Back to Blue">
+        <h2><a href="#">Swinging Back to Blue</a></h2>
+        <div class="byline"><strong>Anonymous</strong> • Nov. 16, 2025</div>
+        <p>Key Takeaways From Election Night in PA and GA</p>
+      </article>
+      <article class="story-card layout-right">
+        <div>
+          <h2><a href="#">Did Something Good Actually Just Happen?</a></h2>
+          <div class="byline"><strong>By <i>The Donk!</i> Editorial Board</strong> • Nov. 7, 2025</div>
+          <p>Woke is once again the backbone of American democracy.</p>
+        </div>
+        <img src="img/did-something-good-actually-just-happen.webp" alt="Did Something Good Actually Just Happen?">
+      </article>
+      <article class="story-card">
+        <img src="img/thank-you-comrade-trump.png" alt="Thank You, Comrade Trump?">
+        <h2><a href="#">Thank You, Comrade Trump?</a></h2>
+        <div class="byline"><strong>By Landon Pungarcher</strong> • Nov. 3, 2025</div>
+        <p>How Trump fulfilled a Leftist dream.</p>
+      </article>
+      <article class="story-card">
+        <h2><a href="#">Ironyposting Yourself Into Nazism</a></h2>
+        <div class="byline"><strong>By Stone Grayson</strong> • Oct. 20, 2025</div>
+        <p>When Edginess Edges into Fascism</p>
+        <img src="img/ironyposting-yourself-into-nazism.png" alt="Ironyposting Yourself Into Nazism">
+      </article>
+      <article class="story-card">
+        <img src="img/advils-new-advertisement-campaign.webp" alt="Advil's New Advertisement Campaign">
+        <h2><a href="#">Advil's New Advertisement Campaign</a></h2>
+        <div class="byline"><strong>Anonymous</strong> • Oct. 14, 2025</div>
+        <p>Tylenol, Autism, and the Brainworm at the Forefront of Science</p>
+      </article>
+      <article class="story-card layout-left">
+        <img src="img/ts-and-ps.webp" alt="Ts&Ps">
+        <div>
+          <h2><a href="#">Ts&Ps</a></h2>
+          <div class="byline"><strong>Anonymous</strong> • Oct. 1, 2025</div>
+          <p>Free Speech, Political Violence, and the Essence of a Tolerant Society</p>
+        </div>
+      </article>
+      <article class="story-card">
+        <img src="img/how-trump-decimated-the-australian-right.webp" alt="How Trump Decimated the Australian Right">
+        <h2><a href="#">How Trump Decimated the Australian Right</a></h2>
+        <div class="byline"><strong>By Will Vanman</strong> • May. 25, 2025</div>
+        <p>Trump's re-election was supposed to help Australia's Right. Instead, it blew them to pieces</p>
+      </article>
+      <article class="story-card layout-right">
+        <div>
+          <h2><a href="#">Beating a Dead Donkey</a></h2>
+          <div class="byline"><strong>By Emily Price</strong> • May. 21, 2025</div>
+          <p>David Hogg, Malcom Kenyatta, and the DNC's inability to do literally anything ever</p>
+        </div>
+        <img src="img/beating-a-dead-donkey.webp" alt="Beating a Dead Donkey">
+      </article>
+      <article class="story-card">
+        <img src="img/housing-in-the-land-of-lincoln.webp"
+          alt="Housing in the Land of Lincoln">
+        <h2><a href="#">Housing in the Land of Lincoln</a></h2>
+        <div class="byline"><strong>By Morgan Walker</strong> • May. 20, 2025</div>
+        <p>How You Can Make a Difference Close to Home</p>
+      </article>
+      <article class="story-card">
+        <h2><a href="#">HELP I'M BEING CANCELED</a></h2>
+        <div class="byline"><strong>By Kai Foster</strong> • May. 20, 2025</div>
+        <p>Has "Cancel Culture" been defeated once and for all?</p>
+        <img src="img/help-im-being-cancelled.webp"
+          alt="HELP I'M BEING CANCELED">
+      </article>
+      <article class="story-card">
+        <img src="img/unpacking-the-wacky-ideology-of-the-paypal-mafia.webp" alt="PayPal Mafia">
+        <h2><a href="#">Unpacking the Wacky Ideology of The PayPal Mafia</a></h2>
+        <div class="byline"><strong>By Will Vanman</strong> • May. 14, 2025</div>
+        <p>Campaign finance disclosures reveal unprecedented spending levels ahead of upcoming electoral contests.</p>
+      </article>
+      <article class="story-card">
+        <h2><a href="#">The Wealthy and The Damned</a></h2>
+        <div class="byline"><strong>By Addison Marshall</strong> • May. 13, 2025</div>
+        <p>What is fair under a second Trump administration?</p>
+        <img src="img/the-wealthy-and-the-damned.webp" alt="The Wealthy and The Damned">
+      </article>
+      <article class="story-card layout-right">
+        <div>
+          <h2><a href="#">What the Hell Just Happened at USG?</a></h2>
+          <div class="byline"><strong>By Stone Grayson</strong> • May. 10, 2025</div>
+          <p>A story of impeachment, deep state bureaucrats and procedural hijinks</p>
+        </div>
+        <img src="img/what-the-hell-just-happened-at-usg.webp" alt="What the Hell Just Happened at USG?">
+      </article>
+      <article class="story-card">
+        <h2><a href="#">"A Tariff Man Through and Through!"</a></h2>
+        <div class="byline"><strong>By Stone Grayson</strong> • May. 6, 2025</div>
+        <p>How Trump's favorite president ruined the Republican Party</p>
+        <img src="img/a-tariff-man-through-and-through.webp" alt="A Tariff Man Through and Through!">
+      </article>
+    </div>
+    <section class="opinion-section">
+    </section>
+  </main>
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2026 The Political Times. All rights reserved.</p>
+      <p>Contact us: contact@politicaltimes.com</p>
+    </div>
+  </footer>
+  <script>
+    // Display current date
+    const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    const today = new Date();
+    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+  </script>
+</body>
+</html>
