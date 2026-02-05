@@ -74,7 +74,7 @@ function verifyToken(token) {
 }
 
 // Login endpoint
-app.post('/api/add-article', requireAuth, upload.single('image'), async (req, res) => {
+app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   
   if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
@@ -452,7 +452,7 @@ const upload = multer({
 });
 
 // Add new article endpoint (protected)
-app.post('/api/add-article', requireAuth, upload.single('image'), (req, res) => {
+app.post('/api/add-article', requireAuth, upload.single('image'), async (req, res) => {
   try {
     const { articleId, title, description, author, date, content, featured } = req.body;
     
