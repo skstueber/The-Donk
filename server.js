@@ -74,7 +74,7 @@ function verifyToken(token) {
 }
 
 // Login endpoint
-app.post('/api/login', (req, res) => {
+app.post('/api/add-article', requireAuth, upload.single('image'), async (req, res) => {
   const { username, password } = req.body;
   
   if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
