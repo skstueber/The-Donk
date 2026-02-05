@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Article - The Donk</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #2a2a2a;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      color: #5dade2;
+      margin-bottom: 30px;
+      font-size: 32px;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #5dade2;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    input[type="text"],
+    input[type="date"],
+    input[type="file"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      background: #1a1a1a;
+      border: 1px solid #444;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      transition: border-color 0.3s;
+    }
+    
+    input[type="file"] {
+      padding: 10px;
+    }
+    
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #5dade2;
+    }
+    
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    
+    .checkbox-group label {
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    button {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+    }
+    
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .btn-primary {
+      background: #5dade2;
+      color: #0a0a0a;
+    }
+    
+    .btn-primary:hover:not(:disabled) {
+      background: #7bc0eb;
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #5dade2;
+      border: 2px solid #5dade2;
+    }
+    
+    .btn-secondary:hover {
+      background: #5dade2;
+      color: #0a0a0a;
+    }
+    
+    .message {
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    
+    .message.show {
+      display: block;
+    }
+    
+    .success-message {
+      background: #27ae60;
+      color: white;
+    }
+    
+    .error-message {
+      background: #c0392b;
+      color: white;
+    }
+    
+    .helper-text {
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .loading.show {
+      display: block;
+    }
+    
+    .spinner {
+      border: 3px solid #444;
+      border-top: 3px solid #5dade2;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .image-preview {
+      margin-top: 10px;
+      max-width: 300px;
+    }
+    
+    .image-preview img {
+      width: 100%;
+      border-radius: 4px;
+      border: 1px solid #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Add New Article</h1>
+    
+    <div class="message success-message" id="successMessage">
+      Article added successfully! The page will refresh in 3 seconds...
+    </div>
+    
+    <div class="message error-message" id="errorMessage"></div>
+    
+    <div style="margin-bottom: 20px; padding: 15px; background: #1a1a1a; border-radius: 4px; border: 1px solid #444;">
+      <p style="margin-bottom: 10px; font-size: 14px;">Test your email configuration:</p>
+      <button type="button" class="btn-secondary" onclick="testEmail()" id="testEmailBtn" style="width: auto; padding: 8px 20px;">Send Test Email</button>
+      <p id="testEmailResult" style="margin-top: 10px; font-size: 12px; color: #888;"></p>
+    </div>
+    
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p style="margin-top: 15px;">Uploading article...</p>
+    </div>
+    
+    <form id="articleForm" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="articleId">Article ID</label>
+        <input type="text" id="articleId" name="articleId" required placeholder="e.g., my-article-title" readonly>
+        <div class="helper-text">Auto-generated from title</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required placeholder="Article Title">
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" required placeholder="Brief summary or subtitle">
+      </div>
+      
+      <div class="form-group">
+        <label for="author">Author</label>
+        <input type="text" id="author" name="author" required placeholder="By John Doe or Anonymous">
+        <div class="helper-text">Can include HTML like: By &lt;i&gt;The Donk!&lt;/i&gt; Editorial Board</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="date">Publication Date</label>
+        <input type="date" id="date" name="date" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="image">Article Image</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+        <div class="helper-text">Accepted formats: JPG, PNG, GIF, WebP</div>
+        <div class="image-preview" id="imagePreview"></div>
+      </div>
+      
+      <div class="form-group">
+        <label for="content">Article Content</label>
+        <textarea id="content" name="content" placeholder="Full article text..."></textarea>
+      </div>
+      
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="featured" name="featured">
+          <label for="featured">Featured Article (Main Story)</label>
+        </div>
+      </div>
+      
+      <div class="button-group">
+        <button type="submit" class="btn-primary" id="submitBtn">Add Article</button>
+        <button type="button" class="btn-secondary" onclick="clearForm()">Clear Form</button>
+        <button type="button" class="btn-secondary" onclick="window.location.href='index.html'">Back to Site</button>
+        <button type="button" class="btn-secondary" onclick="logout()">Logout</button>
+      </div>
+    </form>
+  </div>
+  
+  <script>
+    // Check authentication on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        window.location.href = '/login.html';
+      }
+    });
+    
+    // Logout function
+    function logout() {
+      const token = localStorage.getItem('adminToken');
+      fetch(`${API_URL}/api/logout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token })
+      }).finally(() => {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
+        window.location.href = '/login.html';
+      });
+    }
+    
+    // Auto-generate article ID from title
+    document.getElementById('title').addEventListener('input', function(e) {
+      const title = e.target.value;
+      const id = title.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+      document.getElementById('articleId').value = id;
+    });
+    
+    // Image preview
+    document.getElementById('image').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('imagePreview');
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.innerHTML = '';
+      }
+    });
+    
+    // Form submission
+    document.getElementById('articleForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData();
+      const dateInput = document.getElementById('date').value;
+      
+      // Format date
+      const date = new Date(dateInput);
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const formattedDate = `${months[date.getMonth()]}. ${date.getDate()}, ${date.getFullYear()}`;
+      
+      // Append all form fields
+      formData.append('articleId', document.getElementById('articleId').value);
+      formData.append('title', document.getElementById('title').value);
+      formData.append('description', document.getElementById('description').value);
+      formData.append('author', document.getElementById('author').value);
+      formData.append('date', formattedDate);
+      formData.append('content', document.getElementById('content').value);
+      formData.append('featured', document.getElementById('featured').checked);
+      formData.append('image', document.getElementById('image').files[0]);
+      
+      // Show loading
+      document.getElementById('loading').classList.add('show');
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('errorMessage').classList.remove('show');
+      
+      // Get authentication token
+      const token = localStorage.getItem('adminToken');
+      
+      try {
+        const response = await fetch('http://localhost:3000/api/add-article', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (response.status === 401) {
+          // Unauthorized - redirect to login
+          localStorage.removeItem('adminToken');
+          localStorage.removeItem('adminUser');
+          window.location.href = '/login.html';
+          return;
+        }
+        
+        if (response.ok) {
+          document.getElementById('successMessage').classList.add('show');
+          document.getElementById('articleForm').reset();
+          document.getElementById('imagePreview').innerHTML = '';
+          
+          // Refresh page after 3 seconds
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        } else {
+          throw new Error(result.error || 'Failed to add article');
+        }
+      } catch (error) {
+        document.getElementById('errorMessage').textContent = `Error: ${error.message}`;
+        document.getElementById('errorMessage').classList.add('show');
+        document.getElementById('submitBtn').disabled = false;
+      } finally {
+        document.getElementById('loading').classList.remove('show');
+      }
+    });
+    
+    function clearForm() {
+      document.getElementById('articleForm').reset();
+      document.getElementById('imagePreview').innerHTML = '';
+      document.getElementById('errorMessage').classList.remove('show');
+      document.getElementById('successMessage').classList.remove('show');
+    }
+    
+    // Set today's date as default
+    document.getElementById('date').valueAsDate = new Date();
+    
+    // Test email function
+    async function testEmail() {
+      const token = localStorage.getItem('adminToken');
+      const btn = document.getElementById('testEmailBtn');
+      const result = document.getElementById('testEmailResult');
+      
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      result.textContent = '';
+      
+      try {
+        const response = await fetch(`${API_URL}/api/test-email`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          result.style.color = '#4caf50';
+          result.textContent = '✓ ' + data.message;
+        } else {
+          result.style.color = '#ef5350';
+          result.textContent = '✗ ' + data.message;
+        }
+      } catch (error) {
+        result.style.color = '#ef5350';
+        result.textContent = '✗ Connection error';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Test Email';
+      }
+    }
+  </script>
+</body>
+</html>

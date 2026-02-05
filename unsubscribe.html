@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unsubscribe - The Donk</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Georgia', serif;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      width: 100%;
+      background: #2a2a2a;
+      padding: 40px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .logo {
+      font-family: 'Old English Text MT', 'Times New Roman', serif;
+      font-size: 48px;
+      color: #5dade2;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #b0b0b0;
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+    button {
+      padding: 15px 40px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #c0392b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    button:hover {
+      background: #a93226;
+    }
+    .cancel-btn {
+      background: #5dade2;
+    }
+    .cancel-btn:hover {
+      background: #7bc0eb;
+    }
+    .message {
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .message.show {
+      display: block;
+    }
+    .success {
+      background: #1e4620;
+      color: #4caf50;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">The Donk</div>
+    <h1>Unsubscribe</h1>
+    
+    <div class="message success" id="successMessage">
+      You've been successfully unsubscribed. We're sorry to see you go!
+    </div>
+    
+    <div id="confirmSection">
+      <p>Are you sure you want to unsubscribe from The Donk newsletter?</p>
+      <button onclick="unsubscribe()">Yes, Unsubscribe</button>
+      <button class="cancel-btn" onclick="window.location.href='index.html'">Cancel</button>
+    </div>
+  </div>
+  
+  <script>
+    const API_URL = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3000'
+      : window.location.origin;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
+
+    async function unsubscribe() {
+      if (!email) {
+        alert('Invalid unsubscribe link');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/api/unsubscribe`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: decodeURIComponent(email) })
+        });
+
+        if (response.ok) {
+          document.getElementById('confirmSection').style.display = 'none';
+          document.getElementById('successMessage').classList.add('show');
+          
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 3000);
+        } else {
+          alert('Failed to unsubscribe. Please try again.');
+        }
+      } catch (error) {
+        alert('Connection error. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>
