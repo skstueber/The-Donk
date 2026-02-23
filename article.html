@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Article - The Donk</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      color: #333;
+      background: #fff;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      background: #1a1a1a;
+      color: #e0e0e0;
+    }
+    header {
+      border-bottom: 3px solid #333;
+      padding: 20px 0;
+      transition: border-color 0.3s;
+    }
+    body.dark-mode header {
+      border-bottom-color: #5dade2;
+    }
+    .top-bar {
+      max-width: 1200px;
+      margin: 0 auto 5px auto;
+      padding: 0 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+    }
+    .site-logo {
+      width: 120px;
+      height: 60px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #666;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      overflow: hidden;
+    }
+    .site-logo img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    body.dark-mode .site-logo {
+      background: transparent;
+      border: none;
+      color: #5dade2;
+    }
+    .date {
+      color: #666;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    body.dark-mode .date {
+      color: #a0a0a0;
+    }
+    .subscribe-btn {
+      background: #567b95;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+      transition: background 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    body.dark-mode .subscribe-btn {
+      background: #5dade2;
+      color: #0a0a0a;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+    .donate-btn {
+      background: #c0392b;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .logo-container {
+      text-align: center;
+      padding: 0;
+    }
+    .logo-image {
+      max-width: 400px;
+      max-height: 80px;
+      width: auto;
+      height: auto;
+    }
+    .logo {
+      font-family: 'Old English Text MT', 'Times New Roman', serif;
+      font-size: 60px;
+      font-weight: normal;
+      letter-spacing: 2px;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+    body.dark-mode .logo {
+      color: #5dade2;
+    }
+    .tagline {
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      color: #666;
+      margin-top: 5px;
+      transition: color 0.3s;
+    }
+    body.dark-mode .tagline {
+      color: #a0a0a0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 40px;
+    }
+    .back-link {
+      margin-bottom: 30px;
+    }
+    .back-link a {
+      color: #567b95;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    body.dark-mode .back-link a {
+      color: #5dade2;
+    }
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+    article {
+      padding-bottom: 60px;
+    }
+    h1 {
+      font-size: 48px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      font-weight: 700;
+      transition: color 0.3s;
+    }
+    body.dark-mode h1 {
+      color: #fff;
+    }
+    .description {
+      font-size: 22px;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    body.dark-mode .description {
+      color: #5dade2;
+    }
+    .byline {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e2e2;
+      transition: all 0.3s;
+    }
+    body.dark-mode .byline {
+      color: #a0a0a0;
+      border-bottom-color: #2a2a2a;
+    }
+    .byline strong {
+      color: #333;
+      transition: color 0.3s;
+    }
+    body.dark-mode .byline strong {
+      color: #5dade2;
+    }
+    .article-image {
+      width: 100%;
+      max-height: 600px;
+      object-fit: cover;
+      margin-bottom: 40px;
+      border-radius: 4px;
+    }
+    .content {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #333;
+      transition: color 0.3s;
+    }
+    body.dark-mode .content {
+      color: #b0b0b0;
+    }
+    .content p {
+      margin-bottom: 20px;
+    }
+    .share-section {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 2px solid #e2e2e2;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    body.dark-mode .share-section {
+      border-top-color: #2a2a2a;
+    }
+    .share-section h3 {
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+      transition: color 0.3s;
+    }
+    body.dark-mode .share-section h3 {
+      color: #5dade2;
+    }
+    .share-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      padding: 10px 20px;
+      background: #567b95;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    body.dark-mode .share-btn {
+      background: #5dade2;
+      color: #0a0a0a;
+    }
+    .share-btn:hover {
+      background: #4a6a7f;
+    }
+    body.dark-mode .share-btn:hover {
+      background: #7bc0eb;
+    }
+    .not-found {
+      text-align: center;
+      padding: 100px 20px;
+    }
+    .not-found h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    .not-found p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #666;
+    }
+    body.dark-mode .not-found p {
+      color: #a0a0a0;
+    }
+    footer {
+      background: #f7f7f7;
+      border-top: 1px solid #e2e2e2;
+      padding: 40px 0;
+      margin-top: 60px;
+      transition: all 0.3s;
+    }
+    body.dark-mode footer {
+      background: #0a0a0a;
+      border-top-color: #2a2a2a;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 60px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      transition: color 0.3s;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+      .top-bar {
+        padding: 0 20px;
+      }
+      .logo {
+        font-size: 40px;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      .description {
+        font-size: 18px;
+      }
+      .content {
+        font-size: 16px;
+      }
+      .article-image {
+        max-height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-bar">
+      <div class="site-logo" onclick="toggleDarkMode()">
+        <img src="img/logo.png" alt="logo" onerror="this.style.display='none'; this.parentElement.textContent='LOGO';">
+      </div>
+      <div class="date" id="current-date"></div>
+      <div class="button-group">
+        <a href="subscribe.html" class="subscribe-btn">SUBSCRIBE</a>
+        <button class="donate-btn">DONATE</button>
+      </div>
+    </div>
+    <div class="logo-container">
+      <img src="img/title.png" alt="The Donk" class="logo-image"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="logo" style="display: none;" onclick="window.location.href='index.html'">The Donk</div>
+      <div class="tagline">Basically John Oliver if he was a group of college students.</div>
+    </div>
+  </header>
+  <main class="container">
+    <div class="back-link">
+      <a href="index.html">← Back to Home</a>
+    </div>
+    <article id="article-content">
+      <!-- Article content will be loaded here -->
+    </article>
+    <div id="not-found" class="not-found" style="display: none;">
+      <h1>Article Not Found</h1>
+      <p>Sorry, we couldn't find the article you're looking for.</p>
+      <a href="index.html" class="share-btn">Return to Home</a>
+    </div>
+    <div class="share-section" id="share-section" style="display: none;">
+      <h3>Share This Article</h3>
+      <div class="share-buttons">
+        <a href="#" class="share-btn" id="share-twitter" target="_blank">Share on Twitter</a>
+        <a href="#" class="share-btn" id="share-facebook" target="_blank">Share on Facebook</a>
+        <a href="#" class="share-btn" id="share-email">Share via Email</a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2026 The Donk. All rights reserved.</p>
+      <p>Contact us: contact@thedonk.com</p>
+    </div>
+  </footer>
+  <script src="js/articles.js"></script>
+  <script>
+    // Display current date
+    const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+    const today = new Date();
+    document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+    // Dark mode toggle
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
+    // Load saved preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+    }
+    // Get article ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('id');
+    // Load and display article
+    function loadArticle() {
+      if (!articleId) {
+        showNotFound();
+        return;
+      }
+      // Find article by ID
+      const article = articlesData.find(a => a.id === articleId);
+      if (!article) {
+        showNotFound();
+        return;
+      }
+      // Update page title
+      document.getElementById('page-title').textContent = `${article.title} - The Donk`;
+      // Build article HTML
+      const articleHTML = `
+        <h1>${article.title}</h1>
+        <div class="description">${article.description}</div>
+        <div class="byline"><strong>${article.author}</strong> • ${article.displayDate}</div>
+        ${article.image ? `<img src="${article.image}" alt="${article.title}" class="article-image">` : ''}
+        <div class="content">
+          ${article.content ? article.content.split('\n\n').map(p => `<p>${p}</p>`).join('') : '<p>Article content coming soon...</p>'}
+        </div>
+      `;
+      document.getElementById('article-content').innerHTML = articleHTML;
+      document.getElementById('share-section').style.display = 'block';
+      // Setup share buttons
+      setupShareButtons(article);
+    }
+    function showNotFound() {
+      document.getElementById('article-content').style.display = 'none';
+      document.getElementById('share-section').style.display = 'none';
+      document.getElementById('not-found').style.display = 'block';
+    }
+    function setupShareButtons(article) {
+      const articleUrl = window.location.href;
+      const articleTitle = encodeURIComponent(article.title);
+      const articleDescription = encodeURIComponent(article.description);
+      // Twitter
+      document.getElementById('share-twitter').href =
+        `https://twitter.com/intent/tweet?text=${articleTitle}&url=${encodeURIComponent(articleUrl)}`;
+      // Facebook
+      document.getElementById('share-facebook').href =
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(articleUrl)}`;
+      // Email
+      document.getElementById('share-email').href =
+        `mailto:?subject=${articleTitle}&body=${articleDescription}%0A%0A${encodeURIComponent(articleUrl)}`;
+    }
+    // Load article on page load
+    loadArticle();
+  </script>
+</body>
+</html>
